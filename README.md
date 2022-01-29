@@ -13,17 +13,17 @@ Useful resources
 
 1. Pull images
 2. Try out nginx
-  a. expose port
-  b. mount volume
+ - expose port
+ - mount volume
 3. [Create a .Net][dotnetcreate] project in a container
-  a. mount volume
+ - mount volume
 4. Run Postgres
 5. Create a Docker project with compose to this solution
-  a. give parameters what you would use with docker cli
-  b. use service discovery
-  c. rebuild projects
-  d. start/stop/restart components
-  e. inject dev tools
+ - give parameters what you would use with docker cli
+ - use service discovery
+ - rebuild projects
+ - start/stop/restart components
+ - inject dev tools
 
 [dotnetcreate]: https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-new
 [slides]: http://patakino.web.elte.hu/wsps-containers.pdf
