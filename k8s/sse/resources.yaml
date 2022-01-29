@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sse
+  labels:
+    app: sse
+spec:
+  ports:
+  - name: web
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 30008
+  selector:
+    app: sse
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sse
+  labels:
+    app: sse
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sse
+  template:
+    metadata:
+      labels:
+        app: sse
+    spec:
+      containers:
+      - name: sse
+        image: messageboard_sse
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 80
+        env:
+        - name: TOPIC
+          value: messageboard
+        - name: NATS
+          value: "nast://nats:4222"
