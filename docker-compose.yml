@@ -1,0 +1,60 @@
+version: "3.8"
+services:
+  ui:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - "./messageBoardUi:/usr/share/nginx/html:ro"
+    depends_on:
+      - api
+      - sse
+
+  api:
+    build:
+      context: ./messageBoardApi
+    ports:
+      - "9090:80"
+    environment:
+      DOTNET_ENVIRONMENT: "Container"
+    restart: always
+    depends_on:
+      - db
+      - mq
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "almafa"
+    volumes:
+      - "./data:/var/lib/postgresql/data:rw"
+    restart: always
+
+  sse:
+    build: './messageBoardSse'
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      TOPIC: "messageboard"
+      NATS: "nats://mq:4222"
+      # NATSUSER: "ruser"
+      # NATSPASS: "T0pS3cr3t"
+    depends_on:
+      - mq
+
+  mq:
+    image: nats
+    restart: always
+    # ports:-
+      # - "4222:4222"
+
+  pg_admin:
+    image: dpage/pgadmin4
+    ports:
+      - "7070:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@local.host"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    volumes:
+      - "./servers.json:/pgadmin4/servers.json:ro"
