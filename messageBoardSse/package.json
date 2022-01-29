@@ -1,0 +1,15 @@
+{
+  "name": "messageBoardSse",
+  "version": "1.0.0",
+  "description": "Server Sent Events provider for MessageBoard application",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Adam, Revesz",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nats": "^1.3.2"
+  }
+}
